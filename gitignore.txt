@@ -1,0 +1,8 @@
+dataset_ok.csv
+movies_dataset.csv
+movies_ok.csv
+__pycache__/
+pi1/
+Readme.md
+credits.csv
+credits_ok.csv
