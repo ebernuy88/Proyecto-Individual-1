@@ -4,8 +4,8 @@ El proyecto consiste en crear un sistema de recomendación de películas basado 
 
 
 ### Sistema de Recomendación de Películas ###
-Este proyecto utiliza técnicas de procesamiento de lenguaje natural y aprendizaje automático para recomendar películas similares basadas en determinadas caracteristicas. Implementado con FastAPI, permite a los usuarios buscar actores y directores, así como obtener recomendaciones personalizadas de películas a través de una API.
 
+Este proyecto emplea técnicas de procesamiento de lenguaje natural y aprendizaje automático para sugerir películas similares según características específicas. Desarrollado con FastAPI, ofrece a los usuarios la posibilidad de buscar actores y directores, además de recibir recomendaciones personalizadas de películas mediante una API
 
 
 
@@ -155,8 +155,8 @@ Respuesta: Lista de títulos de películas recomendadas.
  
   ## Carga y limpieza de datos: ##  
 
-  Se realiza el ETL en dos archivos, uno de peliculas y otro de creditos que contiene información sobre actores y directores.  
-  Primeramente comenzamos con el archivo de movies(peliculas), se realiza un chequeo para saber que tipo de datos tenemos, si hay nulos, duplicados, etc. 
+El proceso de ETL se lleva a cabo en dos archivos: uno que contiene información sobre películas y otro que incluye datos de actores y directores.
+Primero, se analiza el archivo de películas (movies), verificando el tipo de datos, identificando valores nulos, registros duplicados y otras inconsistencias.
 
   Se eliminan duplicados, desanidamos columnas que contienen muchos datos para poder extraer unicamente los que usaremos, de esta forma recortamos el tamaño del dataset.
 
@@ -166,7 +166,7 @@ Respuesta: Lista de títulos de películas recomendadas.
 
   Se convierte la columna 'release_date' a tipo de dato datatime, y se crea una nueva columna 'year' con el año de estreno.
 
-Realizamos un filtrado de peliculas desde el 2004 en adelante,  y en los idiomas ingles, español y portugues. Además, hacemos una selección de 2300 filas de manera aleatoria. De esta manera logramos recortar el dataset para evitar inconvenientes a la hora de deployarlo en Render.
+Filtramos las películas a partir del año 2004 y en los idiomas inglés, español y portugués. Además, seleccionamos aleatoriamente 2,300 filas para reducir el tamaño del conjunto de datos y evitar problemas al desplegarlo en Render.
 
   Creamos una columna 'return' , se ajustan los datos a tipo numérico donde contendrá la ganancia de la pelicula.
 
@@ -177,7 +177,7 @@ Continuamos con el archivo de credits, se realizan los chequeos generales como h
 
 Eliminamos duplicados, nulos, desanidamos columnas, se realiza la conversion necesaria para poder extraer la parte de los datos que nos será util.
 
-Luego verificamos el tipo de dato de cada fila, se muestran, nos damos cuenta que hay valores nulos en las columnas de actor y director, como son porcentajes minimos decidimos eliminarlos.
+Luego, verificamos el tipo de dato de cada fila y detectamos valores nulos en las columnas de actor y director. Dado que representan un porcentaje mínimo, optamos por eliminarlos.
 
 Corroboramos que no quedaron nulos, y se eliminan las columnas que no vamos a utilizar.
 
@@ -188,7 +188,7 @@ Chequeamos la cantidad de filas antes y después del merge, efectivamente se rea
 
 ## Creación del modelo ##  
 
-Creamos una columna nueva 'features' en donde vamos a guardar las caracteristicas de genero, pais de origen y director, para crear nuestro modelo de recomendación.  
+Creamos una nueva columna llamada 'features', donde almacenamos las características de género, país de origen y director, con el propósito de desarrollar nuestro modelo de recomendación.
 Se convierte cada lista en una cadena de texto para poder combinar los datos, se manejan valores faltantes.
 Tomamos otra caracteristica para sumar al calculo de similitud, pero esta vez al ser numérica (calificacion promedio <vote_average>) debemos escalarla con MinMaxScaler.  
 
@@ -211,12 +211,12 @@ El gráfico muestra la distribución de películas por género. Cada barra repre
 
 Observaciones clave:
 
-Desigualdad en la distribución: Se observa una gran disparidad en la cantidad de películas por género. Algunos géneros, como la comedia o el drama, tienen una representación mucho mayor que otros, como el western o el musical.
+Desbalance en la distribución: Se nota una marcada diferencia en la cantidad de películas por género. Mientras que géneros como comedia y drama tienen una representación significativamente mayor, otros como western o musical son mucho menos frecuentes.
 Géneros dominantes: Los géneros con barras más largas son los más populares o los que tienen una mayor producción cinematográfica.  
 
 Géneros minoritarios: Los géneros con barras más cortas son menos comunes o tienen una producción más limitada.
 
-Este gráfico nos permite visualizar rápidamente cuáles son los géneros cinematográficos más populares y cuáles son menos frecuentes dentro del conjunto de datos analizado. También podemos identificar tendencias generales en la producción cinematográfica, como la predominancia de ciertos géneros sobre otros.
+Este gráfico facilita la identificación de los géneros cinematográficos más populares y aquellos menos representados en el conjunto de datos. Además, permite detectar tendencias generales en la producción de películas, evidenciando la predominancia de ciertos géneros sobre otros.
 
 Se observa una clara desigualdad en la representación de los diferentes géneros, con una predominancia de drama/thriller y drama/comedia y una menor presencia de war, history y foreign.
 
@@ -236,9 +236,7 @@ Algunos casos excepcionales: Existen algunos puntos aislados que representan pel
 Conclusiones:
 
 La calificación no es el único factor determinante de los ingresos: Aunque una buena calificación puede contribuir al éxito comercial de una película, no es el único factor. Otros elementos como el presupuesto de marketing, el elenco, el género, la temporada de estreno y las tendencias del mercado también influyen significativamente en los ingresos.
-La relación entre calificación e ingresos es compleja: La relación entre estas dos variables es más compleja de lo que podría parecer a primera vista. Existen múltiples factores que interactúan y pueden producir resultados inesperados.
-La variabilidad es la norma: La industria cinematográfica es altamente competitiva y los resultados comerciales pueden variar ampliamente, incluso para películas con características similares.
-
+La relación entre calificación e ingresos es más compleja de lo que parece, ya que diversos factores influyen y pueden generar resultados inesperados. Además, en la industria cinematográfica, la variabilidad es una constante, con desempeños comerciales que pueden diferir significativamente incluso entre películas con características similares.
 
 
 
@@ -265,14 +263,14 @@ Colores fríos (azules): Correlación negativa fuerte. A medida que aumenta una 
 Colores cercanos al blanco: Correlación débil o nula. No existe una relación lineal clara entre las variables.
 Interpretación de los Resultados:
 
-Calificación Promedio vs. Año de Estreno: La correlación es cercana a cero, lo que indica que no hay una relación lineal significativa entre la calificación promedio y el año de estreno. Esto significa que las películas más recientes no necesariamente tienen calificaciones más altas o más bajas que las películas más antiguas.
+Calificación Promedio vs. Año de Estreno: La correlación es cercana a cero, lo que sugiere que no existe una relación lineal significativa entre la calificación promedio y el año de estreno. Esto indica que las películas más recientes no presentan necesariamente calificaciones más altas o más bajas en comparación con las más antiguas.
 Calificación Promedio vs. Número de Votos: Existe una correlación positiva moderada. Esto sugiere que las películas con un mayor número de votos tienden a tener calificaciones promedio más altas. Es decir, las películas más populares suelen ser mejor valoradas por los usuarios.
 Año de Estreno vs. Número de Votos: La correlación es muy cercana a cero, lo que indica que no hay una relación lineal significativa entre el año de estreno y el número de votos. Esto sugiere que el número de votos que recibe una película no está necesariamente relacionado con el año en que se estrenó.  
 
 Conclusiones:
 
 La calificación promedio está positivamente correlacionada con el número de votos: Las películas más populares (con más votos) tienden a tener mejores calificaciones.
-No hay una relación clara entre la calificación promedio y el año de estreno: La calidad de una película no parece estar influenciada significativamente por el año en que se estrenó.
-El número de votos no está relacionado con el año de estreno: La cantidad de votos que recibe una película no parece estar influenciada por el año en que se estrenó.  
+No se observa una relación evidente entre la calificación promedio y el año de estreno, lo que sugiere que la calidad de una película no está determinada por la fecha en que fue lanzada.
+Asimismo, la cantidad de votos recibidos por una película no muestra una conexión clara con su año de estreno.
 
 
