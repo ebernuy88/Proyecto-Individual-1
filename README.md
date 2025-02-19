@@ -47,7 +47,7 @@ __Instrucciones de uso:__
 
 
 
-La API estará disponible en:   https://ml-recomendaciones.onrender.com/docs
+La API estará disponible en:   https://proyecto-individual-1-gpq6.onrender.com
       
 
 **Características del Proyecto**
